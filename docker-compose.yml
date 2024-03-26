@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  user:
+    depends_on:
+      - db
+    restart: always
+    build: .
+    environment:
+   
+      - .:/src
+      - /node_modules
+    ports:
+      - "${USER_PORT:-3001}:${USER_PORT:-3001}"
+
+  db:
+    image: mongo
+    container_name: pendulum_mongodb_container
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=ahmed
+      - MONGO_INITDB_ROOT_PASSWORD=2957ahmeds
+    volumes:
+      - mongodata:/data/db
+    ports:
+      - "${DB_PORT:-27017}:${DB_PORT:-27017}"
+
+volumes:
+  mongodata:
